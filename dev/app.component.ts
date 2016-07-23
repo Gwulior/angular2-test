@@ -4,7 +4,7 @@ import {PuzzleComponent} from "./puzzle/puzzle.component";
 
 
 @Component({
-  selector: 'my-app',
+  selector: 'app',
   template: `
      <my-puzzle></my-puzzle>
     `,
