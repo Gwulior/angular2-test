@@ -4,6 +4,7 @@ var assetsDev = 'assets/';
 var assetsProd = 'src/';
 
 var appDev = 'dev/';
+var mapSource = '../dev/';
 var appProd = 'app/';
 
 /* Mixed */
@@ -38,7 +39,12 @@ gulp.task('build-ts', function () {
     return gulp.src(appDev + '**/*.ts')
         .pipe(sourcemaps.init())
         .pipe(typescript(tsProject))
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write('.',
+          {includeContent: false,
+          sourceRoot: function (file) {
+            return mapSource;
+          }
+          }))
         //.pipe(jsuglify())
         .pipe(gulp.dest(appProd));
 });
