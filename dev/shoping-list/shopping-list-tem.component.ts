@@ -1,5 +1,6 @@
 import {Component, Input, Output, EventEmitter} from "@angular/core";
-import {Item} from "./model/models";
+import {Item, ItemImpl} from "./model/models";
+import {ShoppingListService} from "./shopping-list-service";
 /**
  * Created by gwuli on 24.07.2016.
  */
@@ -22,9 +23,14 @@ import {Item} from "./model/models";
 export class ShoppingListItemComponent {
 
   @Input()item:Item;
-  @Output() removed:EventEmitter = new EventEmitter();
+  @Output()removed = new EventEmitter<Item>();
+
+  constructor(private shoppingListService: ShoppingListService){
+
+  }
 
   onDelete() {
-    this.removed.emit(this.item);
+    this.shoppingListService.deleteItem(this.item);
+    this.removed.emit(null);
   }
 }

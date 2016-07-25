@@ -1,5 +1,6 @@
 import {Component, Output, EventEmitter} from "@angular/core";
 import {Item, ItemImpl} from "./model/models";
+import {ShoppingListService} from "./shopping-list-service";
 
 /**
  * Created by gwuli on 24.07.2016.
@@ -24,13 +25,14 @@ import {Item, ItemImpl} from "./model/models";
 
 export class ShoppingListNewItemComponent {
 
+  constructor(private shoppingListService:ShoppingListService) {
+
+  }
+
   item:Item = new ItemImpl('', 0);
 
-  @Output() itemAdd:EventEmitter<Item> = new EventEmitter<Item>();
-
   onClick():void {
-    this.itemAdd.emit(this.item);
-    this.item = new ItemImpl();
+   this.shoppingListService.insertItem(Object.assign({}, this.item));
   }
 
 }

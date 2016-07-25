@@ -2,16 +2,17 @@
  * Created by gwuli on 24.07.2016.
  */
 
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {Item} from "./model/models";
 import {ShoppingListNewItemComponent} from "./shopping-list-new-item.component";
 import {ShoppingListItemComponent} from "./shopping-list-tem.component";
+import {ShoppingListService} from "./shopping-list-service";
 @Component({
   selector: 'shoping-list',
   template: `
 
                 <section>
-                <shopping-list-new-item (itemAdd)="onItemAdded($event)"></shopping-list-new-item>
+                <shopping-list-new-item></shopping-list-new-item>
                 </section>
                 <section>
                     <h3>My List</h3>
@@ -22,27 +23,32 @@ import {ShoppingListItemComponent} from "./shopping-list-tem.component";
                     </div>
                 </section>
                 <section *ngIf="selectedItem != null">
-                <shopping-list-item [item]="selectedItem" (removed)="onRemove($event)"></shopping-list-item>
+                <shopping-list-item [item]="selectedItem"
+                (removed)="onRemove()"></shopping-list-item>
                 </section>
 
 `,
-  directives : [ShoppingListNewItemComponent, ShoppingListItemComponent]
+  directives: [ShoppingListNewItemComponent, ShoppingListItemComponent],
+  providers: [ShoppingListService]
 })
 
-export class ShoppingListComponent {
-    listItems:Item[] = [];
+export class ShoppingListComponent implements OnInit{
+  listItems:Item[] = [];
   selectedItem:Item;
+  constructor(private shoppingListService: ShoppingListService) {
 
-  onItemAdded (item:Item) {
-    this.listItems.push(Object.assign({}, item));
   }
 
   onSelect(item:Item) {
     this.selectedItem = item;
   }
 
-  onRemove(item:Item) {
-    this.listItems.splice(this.listItems.indexOf(item), 1);
+
+  ngOnInit():any {
+    this.listItems = this.shoppingListService.getItems();
+  }
+
+  onRemove() {
     this.selectedItem = null;
   }
 }
