@@ -16,6 +16,7 @@
   var packageNames = [
     '@angular/common',
     '@angular/compiler',
+    '@angular/forms',
     '@angular/core',
     '@angular/http',
     '@angular/platform-browser',
