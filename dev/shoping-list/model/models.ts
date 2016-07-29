@@ -11,10 +11,10 @@ export class ItemImpl implements Item {
   name:string;
   amount:number;
 
-  constructor() {
-    this.name = '';
-    this.amount = 0;
-  }
+  // constructor() {
+  //   this.name = '';
+  //   this.amount = 0;
+  // }
 
   constructor(name:string, amount:number) {
     this.name = name;
