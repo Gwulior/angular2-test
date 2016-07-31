@@ -7,6 +7,7 @@ import {Item} from "./model/models";
 import {ShoppingListNewItemComponent} from "./shopping-list-new-item.component";
 import {ShoppingListItemComponent} from "./shopping-list-tem.component";
 import {ShoppingListService} from "./shopping-list-service";
+import {FilterPipe} from "../filter.pipe";
 @Component({
   selector: 'shoping-list',
   template: `
@@ -16,9 +17,12 @@ import {ShoppingListService} from "./shopping-list-service";
                 </section>
                 <section>
                     <h3>My List</h3>
+                    Filter:
+                    <input type="text" #filter (keyup)="0"/>
                     <div class="list">
                      <ul>
-                      <li *ngFor="let item of listItems" (click)="onSelect(item)">{{item.name}}  ({{item.amount}}) </li>
+                      <li *ngFor="let item of listItems | myFilter:filter.value" 
+                      (click)="onSelect(item)">{{item.name}}  ({{item.amount}}) </li>
                     </ul>
                     </div>
                 </section>
@@ -29,7 +33,8 @@ import {ShoppingListService} from "./shopping-list-service";
 
 `,
   directives: [ShoppingListNewItemComponent, ShoppingListItemComponent],
-  providers: [ShoppingListService]
+  providers: [ShoppingListService],
+  pipes : [FilterPipe]
 })
 
 export class ShoppingListComponent implements OnInit{
