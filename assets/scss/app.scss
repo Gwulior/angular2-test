@@ -1,6 +1,51 @@
-body {
-  padding: 32px;
-  margin: 32px;
-  font-family: "Roboto", Arial, sans-serif;
-  font-size: 16px;
+nav {
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+  }
+
+  li {
+    float: left;
+  }
+
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  /* Change the link color to #111 (black) on hover */
+  li a:hover {
+    background-color: #111;
+  }
+}
+
+.elm {
+  background-color: #D8D9DB;
+  border: thin;
+  align-content: center;
+}
+
+.img {
+  width: 15%;
+
+}
+
+.img-big {
+  width: 70%;
+
+}
+
+#ingreds {
+
+  border-radius: 25px;
+  border: 2px solid #73AD21;
+  padding: 20px;
+  width: inherit;
+  height: inherit;
 }

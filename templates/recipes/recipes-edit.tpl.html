@@ -1,0 +1,49 @@
+<form [formGroup]="recipeForm" (submit)="onSave()">
+  <div class="row">
+    <div class="grid">
+      <div class="inline-btn-group">
+        <button type="submit" class="btn btn--color-default">Save</button>
+        <button type="button" class="btn btn--color-default" (click)="onCancel()">Cancel</button>
+        <button type="button" class="btn btn--color-default" (click)="refillFormm()">Refill Form</button>
+      </div>
+      <input id="name" [formControl]="recipeForm.controls['name']" type="text">
+      <label for="name">Name</label>
+
+      <input type="file" id="image">
+      <label for="image">Image</label>
+
+      <textarea id="content" [formControl]="recipeForm.controls['content']" rows="6"></textarea>
+      <label for="content">Content</label>
+
+    </div>
+  </div>
+
+
+  <div id="ingreds">
+    <div formArrayName="ingredients">
+      <div class="row" *ngFor="let ing of recipeForm.controls.ingredients.controls; let i=index">
+        <div class="grid">
+          <!--Since our nested formGroup is array, we can use index to retrieve
+           elements instead identifiers-->
+          <form [formGroupName]="i">
+            <div class="row">
+              <div class="grid">
+                <label for="ing-sh-name">Name</label>
+                <input id="ing-sh-name" type="text" formControlName="name">
+                <label for="ing-sh-amount">Amount</label>
+                <input type="text" id="ing-sh-amount" formControlName="amount">
+              </div>
+              <div class="grid-2">
+                <button type="button" class="btn btn--color-warning" (click)="onDeleteIngredient(i)">Delete Ingredient</button>
+              </div>
+            </div>
+            <hr>
+          </form>
+        </div>
+      </div>
+      <button type="button" (click)="onAddIngredient()">Add Ingredient</button>
+    </div>
+  </div>
+</form>
+
+

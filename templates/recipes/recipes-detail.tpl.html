@@ -1,0 +1,36 @@
+<div *ngIf="selectedRecipe == null">
+  Please select recipe to see the description
+</div>
+
+<div *ngIf="selectedRecipe != null">
+  <h1>{{selectedRecipe.name}}</h1>
+  <span class="inline-btn-group">
+    <button type="button" class="btn btn--color-default" (click)="onEdit(selectedRecipe.id)">Edit</button>
+    <button type="button" class="btn btn--color-warning" (click)="onDelete()">Delete</button>
+  </span>
+  <div class="row row--align-center">
+    <div class="grid--offset-4">
+      <img class="img-big" [src]="'data:image/png;base64,'+selectedRecipe.image" alt="Recipe">
+    </div>
+  </div>
+  <div class="row row--align-left">
+    <div class="grid-6">
+      {{selectedRecipe.content}}
+    </div>
+    <div class="row row--align-left">
+      <div class="grid-6">
+        <button class="btn btn--color-positive" (click)="onAddToShoppingList()">
+          Add all to shopping list
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row row--align-right" *ngFor="let ingr of selectedRecipe.ingredients">
+
+    <div class="grid--offset-4">
+      {{ingr.name}} ({{ingr.amount}})
+    </div>
+  </div>
+</div>
