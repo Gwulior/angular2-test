@@ -8,28 +8,30 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {RecipeService} from "./recipe-service";
 
 @Component({
-  templateUrl: 'templates/recipes/recipes-edit.tpl.html',
+  templateUrl: `templates/recipes/recipes-edit.tpl.html`,
   directives: [REACTIVE_FORM_DIRECTIVES]
 })
 export class RecipesEditComponent implements OnInit {
 
   recipeForm: FormGroup;
+  isSubmitted: boolean;
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private service: RecipeService) {
-
+    console.log("im rec edit constructor");
     this.initMyForm();
+    this.isSubmitted = false;
 
   }
 
   initMyForm() {
     this.recipeForm = this.formBuilder.group({
-      id : [],
-      name: ['', Validators.required],
-      content: ['', Validators.required],
-      ingredients: []
+      id: [],
+      name: [``, Validators.required],
+      content: [``, Validators.required],
+      ingredients: new FormArray([])
     })
   }
 
@@ -39,18 +41,20 @@ export class RecipesEditComponent implements OnInit {
 
   refillFormm() {
     this.activatedRoute.params.subscribe(params => {
-      this.service.getRecipe(params['id']).subscribe(
-        res => {
-          this.fillMyForm(res);
-          console.log("response = " + res);
-        }
-      )
+      if (params[`id`] != null) {
+        this.service.getRecipe(params[`id`]).subscribe(
+          res => {
+            this.fillMyForm(res);
+            console.log("response = " + res);
+          }
+        )
+      }
     });
   }
 
   fillMyForm(recipe: Recipe) {
     this.recipeForm = this.formBuilder.group({
-      id : [recipe.id],
+      id: [recipe.id],
       name: [recipe.name, Validators.required],
       content: [recipe.content, Validators.required],
       ingredients: this.formBuilder.array(this.initIngredients(recipe))
@@ -73,27 +77,37 @@ export class RecipesEditComponent implements OnInit {
 
   onAddIngredient() {
     // Dynamic adding another form for ingredient
-    let formControl = <FormArray>this.recipeForm.controls[`ingredients`];
+    let formControl: FormArray = <FormArray>this.recipeForm.controls[`ingredients`];
     formControl.push(this.formBuilder.group({
       name: [``],
       amount: [``]
     }));
   }
+
   onDeleteIngredient(index: number) {
-    var formControl = <FormArray>this.recipeForm.controls['ingredients'];
+    let formControl = <FormArray>this.recipeForm.controls[`ingredients`];
     formControl.removeAt(index);
   }
 
 
   onCancel() {
     console.log("im trying to navigate back to detail id = " + this.recipeForm.value.id);
-    this.router.navigate(['recipes/detail', this.recipeForm.value.id]);
+    if (this.recipeForm.value.id == null) {
+      this.router.navigate([`recipes`]);
+    } else {
+      this.router.navigate([`recipes/detail`, this.recipeForm.value.id]);
+    }
   }
 
   onSave() {
-      this.service.saveRecipe(this.recipeForm.value).subscribe(
-        res => this.service.updateTrigger.next(true)
-      );
+    console.log("Form was = " + this.isSubmitted);
+    this.isSubmitted = true;
+    this.service.saveRecipe(this.recipeForm.value).subscribe(
+      res => {
+        this.service.updateTrigger.next(true);
+        this.router.navigate(["recipes"]);
+      }
+    );
 
   }
 

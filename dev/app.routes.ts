@@ -10,10 +10,10 @@ import {CanDeactivateGuard} from "./shared/router.guard";
 
 export const routes: RouterConfig = [
   {
-    path: '',
-    //we need to pass parameter after slash, because out component-1, uses them, and they are required
-    redirectTo: '/recipes',
-    pathMatch: 'full'
+    path: "",
+    // we need to pass parameter after slash, because out component-1, uses them, and they are required
+    redirectTo: "/recipes",
+    pathMatch: "full"
   },
   {
     path: "recipes",
@@ -27,6 +27,11 @@ export const routes: RouterConfig = [
       },
       {
         path : "edit/:id",
+        component : RecipesEditComponent,
+        canDeactivate : [CanDeactivateGuard]
+      },
+      {
+        path : "edit",
         component : RecipesEditComponent,
         canDeactivate : [CanDeactivateGuard]
       }

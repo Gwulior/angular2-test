@@ -6,12 +6,12 @@ import {RecipesEditComponent} from "../receipe-book/recipe-edit.component";
  */
 export class CanDeactivateGuard implements CanDeactivate<RecipesEditComponent> {
   canDeactivate(component: RecipesEditComponent, route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>|boolean {
-    if (!component.recipeForm.pristine) {
-      console.log("returning okowko");
-      return window.confirm("Are you shure?");
+    console.log("form is = " + component.isSubmitted);
+    if (component.isSubmitted || component.recipeForm.pristine) {
+      console.log("returning true");
+      return true;
     }
-    console.log("returning true");
-    return true;
+    return window.confirm("Are you shure?");
   }
 
 

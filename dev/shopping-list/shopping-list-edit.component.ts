@@ -7,7 +7,7 @@ import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormBuilder, Validators, FormContro
 import {ShoppingListService} from "../shared/shopping-list.service";
 
 @Component({
-  selector: 'my-shopping-list-edit',
+  selector: "my-shopping-list-edit",
   template: `
 
     <div class="row">
@@ -42,7 +42,7 @@ import {ShoppingListService} from "../shared/shopping-list.service";
 
 `,
   directives: [REACTIVE_FORM_DIRECTIVES],
-  styleUrls: ['src/css/shopping-list.css']
+  styleUrls: ["src/css/shopping-list.css"]
 })
 export class ShoppingListEditComponent implements OnInit {
 
@@ -50,28 +50,28 @@ export class ShoppingListEditComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private service: ShoppingListService) {
-    console.log('im constructor');
+    console.log("im constructor");
     this.createForm();
   }
 
   @Input()
   set ingredient(edotItem: Ingredient) {
-    console.log('im setter');
+    console.log("im setter");
     if (edotItem != null) {
-      (<FormControl>this.addForm.controls['id']).updateValue(edotItem.id);
-      (<FormControl>this.addForm.controls['name']).updateValue(edotItem.name);
-      (<FormControl>this.addForm.controls['amount']).updateValue(edotItem.amount);
+      (<FormControl>this.addForm.controls["id"]).updateValue(edotItem.id);
+      (<FormControl>this.addForm.controls["name"]).updateValue(edotItem.name);
+      (<FormControl>this.addForm.controls["amount"]).updateValue(edotItem.amount);
     }
 
   }
 
   ngOnInit() {
-    console.log('im init');
+    console.log("im init");
   }
 
   onSubmit(item: Ingredient) {
 
-    if (!((item.name == null || item.name == '' || item.name == ' ') || (item.amount == null))) {
+    if (!((item.name == null || item.name === "" || item.name === " ") || (item.amount == null))) {
       this.service.insertItem(this.addForm.value).subscribe(
         res => this.service.updateTrigger.next(true)
       );
@@ -84,9 +84,9 @@ export class ShoppingListEditComponent implements OnInit {
 
   createForm() {
     this.addForm = this.formBuilder.group({
-      'id': [null],
-      'name': [' '],
-      'amount': [' ', Validators.required]
+      "id": [null],
+      "name": [""],
+      "amount": ["", Validators.required]
     })
   }
 

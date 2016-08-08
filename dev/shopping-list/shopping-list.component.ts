@@ -9,25 +9,31 @@ import {Observable} from "rxjs/Rx";
 import "rxjs/Rx";
 
 @Component({
-  template: `
-<div class="row">
-<div class="grid"></div>
-<div class="grid-4"><h1>Shopping List</h1></div>
-<div class="grid"></div>
+  template: `<div class="row">
+  <div class="grid"></div>
+  <div class="grid-4"><h1>Shopping List</h1></div>
+  <div class="grid"></div>
 </div>
 
 <my-shopping-list-edit [ingredient]="selectedItem" (eventAdd)="onAdd($event)"></my-shopping-list-edit>
 
+
 <div class="row row--align-center">
-<div class="grid-6 align-vertical">
-<table>
-<tbody>
-<tr *ngFor="let item of shoppingList | async">
-<td>{{item.name}}</td> <td>{{item.amount}}</td> <td align="justify"><button type="button" class="btn btn--color-negative tab" (click)="onDelete(item.id)">Delete</button></td>
-</tr>
-</tbody>
-</table>
-</div>
+  <div class="grid-6 align-vertical">
+    <table>
+      <tbody>
+      <tr *ngFor="let item of shoppingList | async">
+        <div (click)="onSelectItem(item)">
+          <td>{{item.name}}</td>
+          <td>{{item.amount}}</td>
+        </div>
+        <td align="justify">
+          <button type="button" class="btn btn--color-negative tab" (click)="onDelete(item.id)">Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 

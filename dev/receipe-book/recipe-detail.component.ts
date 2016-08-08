@@ -6,9 +6,10 @@ import {REACTIVE_FORM_DIRECTIVES, FormBuilder} from "@angular/forms";
 import {Recipe} from "../shared/recipe";
 import {ActivatedRoute, Router} from "@angular/router";
 import {RecipeService} from "./recipe-service";
+import {ShoppingListService} from "../shared/shopping-list.service";
 
 @Component({
-  templateUrl: 'templates/recipes/recipes-detail.tpl.html',
+  templateUrl: "templates/recipes/recipes-detail.tpl.html",
   directives: [REACTIVE_FORM_DIRECTIVES]
 })
 export class RecipeDetailComponent implements OnInit {
@@ -17,15 +18,15 @@ export class RecipeDetailComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private activatedRoute: ActivatedRoute,
-              private router:Router,
-              private service: RecipeService) {
+              private router: Router,
+              private service: RecipeService,
+              private shoppingListService: ShoppingListService) {
     console.log("im constructor RecipeDetail");
   }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      var id = params['id'];
-
+      let id = params["id"];
       if (id != null) {
         this.service.getRecipe(id).subscribe(
           res => {
@@ -40,7 +41,12 @@ export class RecipeDetailComponent implements OnInit {
 
 
   onEdit(id: string) {
-    this.router.navigate(['recipes/edit', id]);
+    this.router.navigate(["recipes/edit", id]);
+  }
+
+  onAddToShoppingList() {
+    this.shoppingListService.insertItems(this.selectedRecipe.ingredients)
+      .subscribe();
   }
 
 

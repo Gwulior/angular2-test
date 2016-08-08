@@ -8,8 +8,8 @@ import {Recipe} from "../shared/recipe";
 import {Router} from "@angular/router";
 
 @Component({
-    selector: 'my-recipe-list',
-    template: `<button class="btn" (click)="onAddRecipes()">Add Recipe</button>
+  selector: "my-recipe-list",
+  template: `<button class="btn" (click)="onAddRecipes()">Add Recipe</button>
 
 <table>
 <tr *ngFor="let item of recipes | async" (click)="onSelect(item)">
@@ -24,23 +24,27 @@ export class RecipeListComponent implements OnInit {
 
   recipes: Observable<Recipe[]>;
 
-    constructor(private service: RecipeService,
-                private router:Router) {
-      service.updateTrigger.subscribe(
-        trig => this.updateList()
-      )
-    }
+  constructor(private service: RecipeService,
+              private router: Router) {
+    service.updateTrigger.subscribe(
+      trig => this.updateList()
+    )
+  }
 
-    ngOnInit( ) {
-      this.updateList();
-    }
+  ngOnInit() {
+    this.updateList();
+  }
 
-    updateList(){
-      this.recipes = this.service.getAllRecipes();
-    }
+  updateList() {
+    this.recipes = this.service.getAllRecipes();
+  }
 
-    onSelect(item: Recipe) {
-      this.router.navigate(['recipes/detail', item.id]);
-    }
+  onSelect(item: Recipe) {
+    this.router.navigate([`recipes/detail`, item.id]);
+  }
+
+  onAddRecipes() {
+    this.router.navigate([`recipes/edit`]);
+  }
 
 }
