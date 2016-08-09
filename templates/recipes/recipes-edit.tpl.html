@@ -9,8 +9,16 @@
       <input id="name" [formControl]="recipeForm.controls['name']" type="text">
       <label for="name">Name</label>
 
-      <input type="file" id="image">
-      <label for="image">Image</label>
+      <div class="row">
+        <div class="grid">
+          <input type="file" multiple accept=".jpg, .png" id="image" (change)="onFileChange($event)">
+          <label for="image">Image</label>
+        </div>
+        <div class="grid-9" *ngIf="image != null">
+          <img [src]="image" class="img-big">
+        </div>
+
+      </div>
 
       <textarea id="content" [formControl]="recipeForm.controls['content']" rows="6"></textarea>
       <label for="content">Content</label>
@@ -34,7 +42,8 @@
                 <input type="number" id="ing-sh-amount" formControlName="amount">
               </div>
               <div class="grid-2">
-                <button type="button" class="btn btn--color-warning" (click)="onDeleteIngredient(i)">Delete Ingredient</button>
+                <button type="button" class="btn btn--color-warning" (click)="onDeleteIngredient(i)">Delete Ingredient
+                </button>
               </div>
             </div>
             <hr>

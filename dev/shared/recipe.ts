@@ -3,7 +3,7 @@ import {Ingredient} from "./ingredient";
  * Created by gwuli on 02.08.2016.
  */
 export class Recipe {
-  id:string;
+  id: string;
   name: string;
   content: string;
   image: string;

@@ -2,7 +2,7 @@
  * Created by gwuli on 07.08.2016.
  */
 import {Component, OnInit} from "@angular/core";
-import {FormBuilder, FormGroup, Validators, REACTIVE_FORM_DIRECTIVES, FormArray} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators, REACTIVE_FORM_DIRECTIVES, FormArray, FormControl} from "@angular/forms";
 import {Recipe} from "../shared/recipe";
 import {ActivatedRoute, Router} from "@angular/router";
 import {RecipeService} from "./recipe-service";
@@ -15,6 +15,7 @@ export class RecipesEditComponent implements OnInit {
 
   recipeForm: FormGroup;
   isSubmitted: boolean;
+  image:string;
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -52,13 +53,29 @@ export class RecipesEditComponent implements OnInit {
     });
   }
 
+  //for update we can recreate the form or update values as below
+  // fillMyForm(recipe: Recipe) {
+  //   this.recipeForm = this.formBuilder.group({
+  //     id: [recipe.id],
+  //     name: [recipe.name, Validators.required],
+  //     content: [recipe.content, Validators.required],
+  //     ingredients: this.formBuilder.array(this.initIngredients(recipe))
+  //   })
+
+  //as here shown)))
   fillMyForm(recipe: Recipe) {
-    this.recipeForm = this.formBuilder.group({
-      id: [recipe.id],
-      name: [recipe.name, Validators.required],
-      content: [recipe.content, Validators.required],
-      ingredients: this.formBuilder.array(this.initIngredients(recipe))
-    })
+
+    // this.recipeForm = this.formBuilder.group({
+    //   id: [recipe.id],
+    //   name: [recipe.name, Validators.required],
+    //   content: [recipe.content, Validators.required],
+    //   ingredients: this.formBuilder.array(this.initIngredients(recipe))
+    // })
+    (<FormControl>this.recipeForm.controls["id"]).updateValue(recipe.id);
+    (<FormControl>this.recipeForm.controls["name"]).updateValue(recipe.name);
+    (<FormControl>this.recipeForm.controls["content"]).updateValue(recipe.content);
+    (<FormArray>this.recipeForm.controls["ingredients"]).controls = this.initIngredients(recipe);
+    this.image = this.addMime(recipe.image);
 
   }
 
@@ -102,7 +119,11 @@ export class RecipesEditComponent implements OnInit {
   onSave() {
     console.log("Form was = " + this.isSubmitted);
     this.isSubmitted = true;
-    this.service.saveRecipe(this.recipeForm.value).subscribe(
+    let recipe = this.recipeForm.value;
+    if (this.image != null) {
+      recipe.image = this.image.split(",")[1];
+    }
+    this.service.saveRecipe(recipe).subscribe(
       res => {
         this.service.updateTrigger.next(true);
         this.router.navigate(["recipes"]);
@@ -111,5 +132,21 @@ export class RecipesEditComponent implements OnInit {
 
   }
 
+  onFileChange(event: any) {
+    if (event.target.files[0] != null) {
+      let fileReader: FileReader = new FileReader();
+      fileReader.onloadend = (ev: ProgressEvent) => {
+        this.image = fileReader.result;
+      };
+
+      fileReader.readAsDataURL(event.target.files[0]);
+    }
+  }
+
+  addMime(str: string): string {
+    return "data:image/jpeg;base64," + str;
+  }
+
 
 }
+
