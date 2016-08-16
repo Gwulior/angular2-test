@@ -5,7 +5,7 @@ import {disableDeprecatedForms, provideForms} from "@angular/forms";
 import {HTTP_PROVIDERS} from "@angular/http";
 import {APP_ROUTER_PROVIDERS} from "./app.routes";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
-import {AuthService} from "./shared/auth.service";
+import {AuthService} from "./auth/auth.service";
 
 bootstrap(AppComponent, [disableDeprecatedForms(), provideForms(), AuthService, HTTP_PROVIDERS, APP_ROUTER_PROVIDERS,  {provide: LocationStrategy, useClass: HashLocationStrategy}]);
 

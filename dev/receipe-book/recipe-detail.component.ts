@@ -6,7 +6,7 @@ import {REACTIVE_FORM_DIRECTIVES, FormBuilder} from "@angular/forms";
 import {Recipe} from "../shared/recipe";
 import {ActivatedRoute, Router} from "@angular/router";
 import {RecipeService} from "./recipe-service";
-import {ShoppingListService} from "../shared/shopping-list.service";
+import {ShoppingListService} from "../shopping-list/shopping-list.service";
 
 @Component({
   templateUrl: "templates/recipes/recipes-detail.tpl.html",

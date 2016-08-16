@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {ShoppingListService} from "./shared/shopping-list.service";
+import {ShoppingListService} from "./shopping-list/shopping-list.service";
 import {ROUTER_DIRECTIVES} from "@angular/router";
 import {RecipeService} from "./receipe-book/recipe-service";
 

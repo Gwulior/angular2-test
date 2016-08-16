@@ -4,7 +4,7 @@
 import {Component, OnInit, Input} from "@angular/core";
 import {Ingredient} from "../shared/ingredient";
 import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
-import {ShoppingListService} from "../shared/shopping-list.service";
+import {ShoppingListService} from "./shopping-list.service";
 
 @Component({
   selector: "my-shopping-list-edit",

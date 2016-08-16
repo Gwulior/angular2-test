@@ -6,7 +6,8 @@ import {FormBuilder, FormGroup, Validators, REACTIVE_FORM_DIRECTIVES, FormArray,
 import {Recipe} from "../shared/recipe";
 import {ActivatedRoute, Router} from "@angular/router";
 import {RecipeService} from "./recipe-service";
-import {Http, RequestOptions} from "@angular/http";
+import {Http, RequestOptions, Headers} from "@angular/http";
+import {basePath, baseImagePath} from "../shared/config.component";
 
 @Component({
   templateUrl: `templates/recipes/recipes-edit.tpl.html`,
@@ -16,7 +17,8 @@ export class RecipesEditComponent implements OnInit {
 
   recipeForm: FormGroup;
   isSubmitted: boolean;
-  image:string;
+  imageId:string;
+  baseImagePath: string;
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -26,6 +28,7 @@ export class RecipesEditComponent implements OnInit {
     console.log("im rec edit constructor");
     this.initMyForm();
     this.isSubmitted = false;
+    this.baseImagePath = baseImagePath;
 
   }
 
@@ -77,7 +80,7 @@ export class RecipesEditComponent implements OnInit {
     (<FormControl>this.recipeForm.controls["name"]).updateValue(recipe.name);
     (<FormControl>this.recipeForm.controls["content"]).updateValue(recipe.content);
     (<FormArray>this.recipeForm.controls["ingredients"]).controls = this.initIngredients(recipe);
-    this.image = this.addMime(recipe.image);
+    this.imageId = recipe.imageId;
 
   }
 
@@ -122,10 +125,13 @@ export class RecipesEditComponent implements OnInit {
 
     console.log("Form was = " + this.isSubmitted);
     this.isSubmitted = true;
-    let recipe = this.recipeForm.value;
-    if (this.image != null) {
-      recipe.image = this.image.split(",")[1];
-    }
+    let recipe: Recipe = this.recipeForm.value;
+    recipe.imageId = this.imageId;
+
+    //was needed for base 64
+    // if (this.imageId != null) {
+    //   recipe.imageId = this.image.split(",")[1];
+    // }
     this.service.saveRecipe(recipe).subscribe(
       res => {
         this.service.updateTrigger.next(true);
@@ -138,13 +144,34 @@ export class RecipesEditComponent implements OnInit {
   onFileChange(event: any) {
     let options = new RequestOptions({
       withCredentials: true,
+      headers: new Headers({
+        'Content-Type': 'application/octet-stream'
+      })
+    });
+    this.http.put(basePath + "image", event.target.files[0], options).subscribe(
+      resp => {
+        console.log("Have just saved picture and response is == " + resp.text());
+        this.imageId = resp.text();
+      }
+    );
+
+  }
+
+
+  //old
+  // onFileChange(event: any) {
+  //   let options = new RequestOptions({
+  //     withCredentials: true,
+      //we can do not define headers, and browser will generate it by itself with boundary, prefer this way
       // headers: new Headers({
       //   'Content-Type': 'multipart/form-data; boundary=312uh132h'
       // })
-    });
-    var formData: FormData = new FormData();
-    formData.append("photo", event.target.files[0]);
-    this.http.post("http://localhost:8081/td/recipe/image", formData, options).subscribe();
+    // });
+    // var formData: FormData = new FormData();
+    // formData.append("photo", event.target.files[0]);
+    // this.http.put(basePath + "http://localhost:8081/td/recipe/image2", formData, options).subscribe();
+    //
+    //or read as base64 string
     // if (event.target.files[0] != null) {
     //   let fileReader: FileReader = new FileReader();
     //   fileReader.onloadend = (ev: ProgressEvent) => {
@@ -153,7 +180,7 @@ export class RecipesEditComponent implements OnInit {
     //
     //   fileReader.readAsDataURL(event.target.files[0]);
     // }
-  }
+  // }
 
   addMime(str: string): string {
     return "data:image/jpeg;base64," + str;

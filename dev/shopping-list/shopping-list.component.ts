@@ -4,7 +4,7 @@
 import {Component, OnInit} from "@angular/core";
 import {ShoppingListEditComponent} from "./shopping-list-edit.component";
 import {Ingredient} from "../shared/ingredient";
-import {ShoppingListService} from "../shared/shopping-list.service";
+import {ShoppingListService} from "./shopping-list.service";
 import {Observable} from "rxjs/Rx";
 import "rxjs/Rx";
 

@@ -2,7 +2,7 @@
  * Created by gwuli on 02.08.2016.
  */
 import {Injectable} from "@angular/core";
-import {Ingredient} from "./ingredient";
+import {Ingredient} from "../shared/ingredient";
 import {Http, Headers, Response} from "@angular/http";
 import {Observable, Subject} from "rxjs/Rx";
 import "rxjs/Rx";

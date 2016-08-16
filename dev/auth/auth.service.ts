@@ -6,6 +6,8 @@ import {Token} from "./auth.token";
 import {Http, Headers, Response, RequestOptions} from "@angular/http";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
+import {basePath} from "../shared/config.component";
+
 
 @Injectable()
 export class AuthService {
@@ -25,7 +27,7 @@ export class AuthService {
       headers: headers,
       withCredentials: true
     });
-    return this.http.post("http://localhost:8081/td/login",
+    return this.http.post(basePath + "login",
     "username=" + token.login +
     "&password=" + token.password,
       options);

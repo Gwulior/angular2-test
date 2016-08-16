@@ -7,8 +7,8 @@ import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 import {RecipeDetailComponent} from "./receipe-book/recipe-detail.component";
 import {RecipesEditComponent} from "./receipe-book/recipe-edit.component";
 import {CanDeactivateGuard} from "./shared/router.guard";
-import {LoginComponent} from "./shared/login.component";
-import {AuthActivateGuard} from "./shared/auth.activate.guard";
+import {LoginComponent} from "./auth/login.component";
+import {AuthActivateGuard} from "./auth/auth.activate.guard";
 
 export const routes: RouterConfig = [
   {
