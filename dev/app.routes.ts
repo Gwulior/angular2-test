@@ -7,17 +7,20 @@ import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 import {RecipeDetailComponent} from "./receipe-book/recipe-detail.component";
 import {RecipesEditComponent} from "./receipe-book/recipe-edit.component";
 import {CanDeactivateGuard} from "./shared/router.guard";
+import {LoginComponent} from "./shared/login.component";
+import {AuthActivateGuard} from "./shared/auth.activate.guard";
 
 export const routes: RouterConfig = [
   {
     path: "",
     // we need to pass parameter after slash, because out component-1, uses them, and they are required
-    redirectTo: "/recipes",
+    component : LoginComponent,
     pathMatch: "full"
   },
   {
     path: "recipes",
     component : RecipeComponent,
+    canActivate : [AuthActivateGuard],
     children : [
       {path : "", component : RecipeDetailComponent},
       {
@@ -46,6 +49,6 @@ export const routes: RouterConfig = [
 export const APP_ROUTER_PROVIDERS = [
 // there we pass out DeactivateHandlerGuard for providing in routes it's absolutely the same as:
   //     provide(FlightEditGuard, {useClass: FlightEditGuard})
-  CanDeactivateGuard,
+  CanDeactivateGuard, AuthActivateGuard,
   provideRouter(routes)
 ];

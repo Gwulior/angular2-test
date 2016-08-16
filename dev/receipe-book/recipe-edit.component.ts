@@ -6,6 +6,7 @@ import {FormBuilder, FormGroup, Validators, REACTIVE_FORM_DIRECTIVES, FormArray,
 import {Recipe} from "../shared/recipe";
 import {ActivatedRoute, Router} from "@angular/router";
 import {RecipeService} from "./recipe-service";
+import {Http, RequestOptions} from "@angular/http";
 
 @Component({
   templateUrl: `templates/recipes/recipes-edit.tpl.html`,
@@ -20,7 +21,8 @@ export class RecipesEditComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              private service: RecipeService) {
+              private service: RecipeService,
+              private http: Http) {
     console.log("im rec edit constructor");
     this.initMyForm();
     this.isSubmitted = false;
@@ -117,6 +119,7 @@ export class RecipesEditComponent implements OnInit {
   }
 
   onSave() {
+
     console.log("Form was = " + this.isSubmitted);
     this.isSubmitted = true;
     let recipe = this.recipeForm.value;
@@ -133,14 +136,23 @@ export class RecipesEditComponent implements OnInit {
   }
 
   onFileChange(event: any) {
-    if (event.target.files[0] != null) {
-      let fileReader: FileReader = new FileReader();
-      fileReader.onloadend = (ev: ProgressEvent) => {
-        this.image = fileReader.result;
-      };
-
-      fileReader.readAsDataURL(event.target.files[0]);
-    }
+    let options = new RequestOptions({
+      withCredentials: true,
+      // headers: new Headers({
+      //   'Content-Type': 'multipart/form-data; boundary=312uh132h'
+      // })
+    });
+    var formData: FormData = new FormData();
+    formData.append("photo", event.target.files[0]);
+    this.http.post("http://localhost:8081/td/recipe/image", formData, options).subscribe();
+    // if (event.target.files[0] != null) {
+    //   let fileReader: FileReader = new FileReader();
+    //   fileReader.onloadend = (ev: ProgressEvent) => {
+    //     this.image = fileReader.result;
+    //   };
+    //
+    //   fileReader.readAsDataURL(event.target.files[0]);
+    // }
   }
 
   addMime(str: string): string {
