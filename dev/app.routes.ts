@@ -42,7 +42,8 @@ export const routes: RouterConfig = [
   },
   {
     path: "shopping-list",
-    component: ShoppingListComponent
+    component: ShoppingListComponent,
+    canActivate : [AuthActivateGuard],
   }
 ];
 

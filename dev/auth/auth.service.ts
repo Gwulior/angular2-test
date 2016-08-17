@@ -6,7 +6,7 @@ import {Token} from "./auth.token";
 import {Http, Headers, Response, RequestOptions} from "@angular/http";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
-import {basePath} from "../shared/config.component";
+import {basePath, reqOptions} from "../shared/config.component";
 
 
 @Injectable()
@@ -42,5 +42,7 @@ export class AuthService {
 
   }
 
-
+  checkLogged(): Observable<Response> {
+    return this.http.get(basePath + "user/whoami", reqOptions);
+  }
 }

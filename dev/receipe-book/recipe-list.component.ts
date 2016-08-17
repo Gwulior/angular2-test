@@ -6,6 +6,7 @@ import {RecipeService} from "./recipe-service";
 import {Observable} from "rxjs";
 import {Recipe} from "../shared/recipe";
 import {Router} from "@angular/router";
+import {baseImagePath} from "../shared/config.component";
 
 @Component({
   selector: "my-recipe-list",
@@ -13,7 +14,7 @@ import {Router} from "@angular/router";
 
 <table>
 <tr *ngFor="let item of recipes | async" (click)="onSelect(item)">
-<td><img class="img" [src]="'data:image/png;base64,'+item.image" alt="Recipe"> </td>
+<td><img class="img" [src]="baseImagePath + item.imageId" alt="Recipe"> </td>
 <td>{{item.name}}</td>
 </tr>
 </table>
@@ -23,12 +24,14 @@ import {Router} from "@angular/router";
 export class RecipeListComponent implements OnInit {
 
   recipes: Observable<Recipe[]>;
+  baseImagePath: string;
 
   constructor(private service: RecipeService,
               private router: Router) {
     service.updateTrigger.subscribe(
       trig => this.updateList()
     )
+    this.baseImagePath = baseImagePath;
   }
 
   ngOnInit() {

@@ -1,4 +1,4 @@
-/**
+ /**
  * Created by gwuli on 06.08.2016.
  */
 import {Component, OnInit} from "@angular/core";
@@ -7,6 +7,7 @@ import {Recipe} from "../shared/recipe";
 import {ActivatedRoute, Router} from "@angular/router";
 import {RecipeService} from "./recipe-service";
 import {ShoppingListService} from "../shopping-list/shopping-list.service";
+ import {baseImagePath} from "../shared/config.component";
 
 @Component({
   templateUrl: "templates/recipes/recipes-detail.tpl.html",
@@ -15,6 +16,7 @@ import {ShoppingListService} from "../shopping-list/shopping-list.service";
 export class RecipeDetailComponent implements OnInit {
 
   selectedRecipe: Recipe;
+  baseImagePath: string;
 
   constructor(private formBuilder: FormBuilder,
               private activatedRoute: ActivatedRoute,
@@ -22,6 +24,7 @@ export class RecipeDetailComponent implements OnInit {
               private service: RecipeService,
               private shoppingListService: ShoppingListService) {
     console.log("im constructor RecipeDetail");
+    this.baseImagePath = baseImagePath;
   }
 
   ngOnInit() {

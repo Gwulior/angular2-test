@@ -6,6 +6,7 @@ import {Ingredient} from "../shared/ingredient";
 import {Http, Headers, Response} from "@angular/http";
 import {Observable, Subject} from "rxjs/Rx";
 import "rxjs/Rx";
+import {basePath, reqOptions, reqOptionsJson} from "../shared/config.component";
 
 @Injectable()
 export class ShoppingListService {
@@ -16,11 +17,11 @@ export class ShoppingListService {
     constructor(private http: Http) { }
 
     getAllItem(): Observable<Ingredient[]> {
-      return this.http.get("http://localhost:8081/td/ing/find_all").map(resp => resp.json());
+      return this.http.get(basePath + "ingredient/find_all", reqOptions).map(resp => resp.json());
     }
 
     getItem(id: number): Observable<Ingredient> {
-      return this.http.get("http://localhost:8081/td/ing/one/" + id).map(resp => resp.json());
+      return this.http.get(basePath + "ingredient/one/" + id, reqOptions).map(resp => resp.json());
 
     }
 
@@ -30,7 +31,7 @@ export class ShoppingListService {
       let headers = new Headers({
         "Content-Type": "application/json"
       });
-     return this.http.post("http://localhost:8081/td/ing", JSON.stringify(item), {headers});
+     return this.http.post(basePath + "ingredient", JSON.stringify(item), reqOptionsJson);
 
     }
 
@@ -38,11 +39,11 @@ export class ShoppingListService {
       let headers = new Headers({
         "Content-Type": "application/json"
       });
-      return this.http.put("http://localhost:8081/td/ing", JSON.stringify(items), {headers});
+      return this.http.put(basePath + "ingredient", JSON.stringify(items), reqOptionsJson);
     }
 
     delete(id: string): Observable<Response> {
-      return this.http.delete("http://localhost:8081/td/ing/one/" + id);
+      return this.http.delete(basePath + "ingredient/one/" + id, reqOptions);
     }
 
 
