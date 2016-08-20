@@ -76,9 +76,9 @@ export class RecipesEditComponent implements OnInit {
     //   content: [recipe.content, Validators.required],
     //   ingredients: this.formBuilder.array(this.initIngredients(recipe))
     // })
-    (<FormControl>this.recipeForm.controls["id"]).updateValue(recipe.id);
-    (<FormControl>this.recipeForm.controls["name"]).updateValue(recipe.name);
-    (<FormControl>this.recipeForm.controls["content"]).updateValue(recipe.content);
+    (<FormControl>this.recipeForm.controls["id"]).setValue(recipe.id);
+    (<FormControl>this.recipeForm.controls["name"]).setValue(recipe.name);
+    (<FormControl>this.recipeForm.controls["content"]).setValue(recipe.content);
     (<FormArray>this.recipeForm.controls["ingredients"]).controls = this.initIngredients(recipe);
     this.imageId = recipe.imageId;
 
