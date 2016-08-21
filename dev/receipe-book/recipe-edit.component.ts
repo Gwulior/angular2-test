@@ -8,16 +8,17 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {RecipeService} from "./recipe-service";
 import {Http, RequestOptions, Headers} from "@angular/http";
 import {basePath, baseImagePath} from "../shared/config.component";
+import {ImageGaleryComponent} from "../directives/galery.directive";
 
 @Component({
   templateUrl: `templates/recipes/recipes-edit.tpl.html`,
-  directives: [REACTIVE_FORM_DIRECTIVES]
+  directives: [REACTIVE_FORM_DIRECTIVES, ImageGaleryComponent]
 })
 export class RecipesEditComponent implements OnInit {
 
   recipeForm: FormGroup;
   isSubmitted: boolean;
-  imageId:string;
+  imagesIds: string[] = [];
   baseImagePath: string;
 
   constructor(private formBuilder: FormBuilder,
@@ -80,7 +81,7 @@ export class RecipesEditComponent implements OnInit {
     (<FormControl>this.recipeForm.controls["name"]).setValue(recipe.name);
     (<FormControl>this.recipeForm.controls["content"]).setValue(recipe.content);
     (<FormArray>this.recipeForm.controls["ingredients"]).controls = this.initIngredients(recipe);
-    this.imageId = recipe.imageId;
+    this.imagesIds = recipe.imagesIds;
 
   }
 
@@ -126,7 +127,7 @@ export class RecipesEditComponent implements OnInit {
     console.log("Form was = " + this.isSubmitted);
     this.isSubmitted = true;
     let recipe: Recipe = this.recipeForm.value;
-    recipe.imageId = this.imageId;
+    recipe.imagesIds = this.imagesIds;
 
     //was needed for base 64
     // if (this.imageId != null) {
@@ -148,12 +149,14 @@ export class RecipesEditComponent implements OnInit {
         'Content-Type': 'application/octet-stream'
       })
     });
-    this.http.put(basePath + "image", event.target.files[0], options).subscribe(
-      resp => {
-        console.log("Have just saved picture and response is == " + resp.text());
-        this.imageId = resp.text();
-      }
-    );
+    for (let i = 0; i < event.target.files.length; i++) {
+      this.http.put(basePath + "image", event.target.files[i], options).subscribe(
+        resp => {
+          console.log("Have just saved picture and response is == " + resp.text());
+          this.imagesIds.push(resp.text());
+        }
+      );
+    }
 
   }
 

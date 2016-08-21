@@ -14,7 +14,7 @@ import {baseImagePath} from "../shared/config.component";
 
 <table>
 <tr *ngFor="let item of recipes | async" (click)="onSelect(item)">
-<td><img class="img" [src]="baseImagePath + item.imageId" alt="Recipe"> </td>
+<td><img class="img" [src]="baseImagePath + item.imagesIds[0]" alt="Recipe"> </td>
 <td>{{item.name}}</td>
 </tr>
 </table>
@@ -30,7 +30,7 @@ export class RecipeListComponent implements OnInit {
               private router: Router) {
     service.updateTrigger.subscribe(
       trig => this.updateList()
-    )
+    );
     this.baseImagePath = baseImagePath;
   }
 

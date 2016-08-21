@@ -14,8 +14,9 @@
           <input type="file" multiple accept=".jpg, .png" id="image" (change)="onFileChange($event)">
           <label for="image">Image</label>
         </div>
-        <div class="grid-9" *ngIf="imageId != null">
-          <img [src]="baseImagePath + imageId" class="img-big">
+        <div class="grid-9" *ngIf="imagesIds != null">
+          <!--<img [src]="baseImagePath + imagesIds" class="img-big">-->
+          <image-calery [images]="imagesIds"></image-calery>
         </div>
 
       </div>
