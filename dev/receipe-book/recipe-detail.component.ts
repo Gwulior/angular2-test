@@ -2,17 +2,18 @@
  * Created by gwuli on 06.08.2016.
  */
 import {Component, OnInit} from "@angular/core";
- import {REACTIVE_FORM_DIRECTIVES, FormBuilder} from "@angular/forms";
+ import {FormBuilder} from "@angular/forms";
  import {Recipe} from "../shared/recipe";
  import {ActivatedRoute, Router} from "@angular/router";
  import {RecipeService} from "./recipe-service";
  import {ShoppingListService} from "../shopping-list/shopping-list.service";
  import {baseImagePath} from "../shared/config.component";
  import {ImageGaleryComponent} from "../directives/galery.directive";
+ import {REACTIVE_FORM_DIRECTIVES} from "@angular/forms/src/directives";
 
  @Component({
   templateUrl: "templates/recipes/recipes-detail.tpl.html",
-  directives: [REACTIVE_FORM_DIRECTIVES, ImageGaleryComponent]
+  // directives: [REACTIVE_FORM_DIRECTIVES, ImageGaleryComponent]
 })
 export class RecipeDetailComponent implements OnInit {
 

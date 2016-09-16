@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {ShoppingListService} from "./shopping-list/shopping-list.service";
-import {ROUTER_DIRECTIVES} from "@angular/router";
 import {RecipeService} from "./receipe-book/recipe-service";
+import {RouterModule} from "@angular/router";
 
 
 @Component({
@@ -23,7 +23,7 @@ import {RecipeService} from "./receipe-book/recipe-service";
 <router-outlet></router-outlet>
 
     `,
-  directives: [ROUTER_DIRECTIVES],
+  // directives: [RouterModule],
   providers: [ShoppingListService, RecipeService]
 })
 export class AppComponent {

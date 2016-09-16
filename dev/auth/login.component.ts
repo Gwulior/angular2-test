@@ -2,11 +2,12 @@
  * Created by gwuli on 11.08.2016.
  */
 import {Component, OnInit} from "@angular/core";
-import {FormGroup, FormBuilder, Validators, REACTIVE_FORM_DIRECTIVES} from "@angular/forms";
+import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {AuthService} from "./auth.service";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {Response} from "@angular/http";
+import {REACTIVE_FORM_DIRECTIVES} from "@angular/forms/src/directives";
 
 @Component({
     selector: 'login-page',
@@ -25,7 +26,7 @@ import {Response} from "@angular/http";
 </div>
 </div>
 `,
-  directives: [REACTIVE_FORM_DIRECTIVES]
+  // directives: [REACTIVE_FORM_DIRECTIVES]
 })
 export class LoginComponent implements OnInit {
 

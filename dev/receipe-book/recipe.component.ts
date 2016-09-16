@@ -4,7 +4,7 @@
 import {Component, OnInit} from "@angular/core";
 import {RecipeService} from "./recipe-service";
 import {RecipeListComponent} from "./recipe-list.component";
-import {ROUTER_DIRECTIVES} from "@angular/router";
+
 
 @Component({
     selector: 'my-recipes',
@@ -22,7 +22,7 @@ import {ROUTER_DIRECTIVES} from "@angular/router";
         </div>
 `,
   providers : [RecipeService],
-  directives : [RecipeListComponent, ROUTER_DIRECTIVES]
+  // directives : [RecipeListComponent, ROUTER_DIRECTIVES]
 
 })
 export class RecipeComponent implements OnInit {

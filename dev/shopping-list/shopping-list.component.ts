@@ -39,7 +39,8 @@ import "rxjs/Rx";
 
 
 `,
-  directives: [ShoppingListEditComponent]
+  // directives: [ShoppingListEditComponent],
+
 })
 export class ShoppingListComponent implements OnInit {
 

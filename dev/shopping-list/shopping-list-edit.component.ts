@@ -3,7 +3,7 @@
  */
 import {Component, OnInit, Input} from "@angular/core";
 import {Ingredient} from "../shared/ingredient";
-import {REACTIVE_FORM_DIRECTIVES, FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
+import {FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
 import {ShoppingListService} from "./shopping-list.service";
 
 @Component({
@@ -41,7 +41,7 @@ import {ShoppingListService} from "./shopping-list.service";
     </div>
 
 `,
-  directives: [REACTIVE_FORM_DIRECTIVES],
+  // directives: [REACTIVE_FORM_DIRECTIVES],
   styleUrls: ["src/css/shopping-list.css"]
 })
 export class ShoppingListEditComponent implements OnInit {
@@ -58,9 +58,9 @@ export class ShoppingListEditComponent implements OnInit {
   set ingredient(edotItem: Ingredient) {
     console.log("im setter");
     if (edotItem != null) {
-      (<FormControl>this.addForm.controls["id"]).updateValue(edotItem.id);
-      (<FormControl>this.addForm.controls["name"]).updateValue(edotItem.name);
-      (<FormControl>this.addForm.controls["amount"]).updateValue(edotItem.amount);
+      (<FormControl>this.addForm.controls["id"]).setValue(edotItem.id);
+      (<FormControl>this.addForm.controls["name"]).setValue(edotItem.name);
+      (<FormControl>this.addForm.controls["amount"]).setValue(edotItem.amount);
     }
 
   }

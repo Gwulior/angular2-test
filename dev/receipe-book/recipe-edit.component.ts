@@ -2,17 +2,18 @@
  * Created by gwuli on 07.08.2016.
  */
 import {Component, OnInit} from "@angular/core";
-import {FormBuilder, FormGroup, Validators, REACTIVE_FORM_DIRECTIVES, FormArray, FormControl} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators, FormArray, FormControl} from "@angular/forms";
 import {Recipe} from "../shared/recipe";
 import {ActivatedRoute, Router} from "@angular/router";
 import {RecipeService} from "./recipe-service";
 import {Http, RequestOptions, Headers} from "@angular/http";
 import {basePath, baseImagePath} from "../shared/config.component";
 import {ImageGaleryComponent} from "../directives/galery.directive";
+import {REACTIVE_FORM_DIRECTIVES} from "@angular/forms/src/directives";
 
 @Component({
   templateUrl: `templates/recipes/recipes-edit.tpl.html`,
-  directives: [REACTIVE_FORM_DIRECTIVES, ImageGaleryComponent]
+  // directives: [REACTIVE_FORM_DIRECTIVES, ImageGaleryComponent]
 })
 export class RecipesEditComponent implements OnInit {
 

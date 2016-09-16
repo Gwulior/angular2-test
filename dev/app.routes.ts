@@ -1,16 +1,18 @@
-/**
- * Created by gwuli on 31.07.2016.
- */
-import {RouterConfig, provideRouter} from "@angular/router";
+import {Routes, RouterModule} from "@angular/router";
+import {LoginComponent} from "./auth/login.component";
 import {RecipeComponent} from "./receipe-book/recipe.component";
-import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
+import {AuthActivateGuard} from "./auth/auth.activate.guard";
 import {RecipeDetailComponent} from "./receipe-book/recipe-detail.component";
 import {RecipesEditComponent} from "./receipe-book/recipe-edit.component";
 import {CanDeactivateGuard} from "./shared/router.guard";
-import {LoginComponent} from "./auth/login.component";
-import {AuthActivateGuard} from "./auth/auth.activate.guard";
+import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
+import {ModuleWithProviders} from "@angular/core";
+/**
+ * Created by gwuli on 31.07.2016.
+ */
 
-export const routes: RouterConfig = [
+
+const appRoutes: Routes = [
   {
     path: "",
     // we need to pass parameter after slash, because out component-1, uses them, and they are required
@@ -47,9 +49,11 @@ export const routes: RouterConfig = [
   }
 ];
 
-export const APP_ROUTER_PROVIDERS = [
-// there we pass out DeactivateHandlerGuard for providing in routes it's absolutely the same as:
-  //     provide(FlightEditGuard, {useClass: FlightEditGuard})
-  CanDeactivateGuard, AuthActivateGuard,
-  provideRouter(routes)
-];
+// export const APP_ROUTER_PROVIDERS = [
+// // there we pass out DeactivateHandlerGuard for providing in routes it's absolutely the same as:
+//   //     provide(FlightEditGuard, {useClass: FlightEditGuard})
+//   CanDeactivateGuard, AuthActivateGuard,
+//   provideRouter(routes)
+// ];
+
+export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes, {useHash: true});
