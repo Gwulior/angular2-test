@@ -54,7 +54,7 @@ export class ShoppingListEditComponent implements OnInit {
     this.createForm();
   }
 
-  @Input()
+  @Input("ingredient")
   set ingredient(edotItem: Ingredient) {
     console.log("im setter");
     if (edotItem != null) {
